@@ -1,5 +1,7 @@
 FROM python:3.4
 
+MAINTAINER Minh-Long Do <minhlong.langos@gmail>
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         postgresql-client \
