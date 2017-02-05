@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.5"
+env:
+  - MEMCACHE_LOCATION=localhost:11211
+services:
+  - memcached
+# command to install dependencies
+install:
+  - "pip install -r requirements.txt"
+script:
+  - cd code_metric
+  - python manage.py test --settings=codemetric.settings
