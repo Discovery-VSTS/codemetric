@@ -90,6 +90,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'contribstats_apis',
+    'contribstats',
 ]
 
 MIDDLEWARE = [
@@ -102,7 +103,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'code_metric.urls'
+ROOT_URLCONF = 'codemetric.urls'
 
 TEMPLATES = [
     {
@@ -120,7 +121,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'code_metric.wsgi.application'
+WSGI_APPLICATION = 'codemetric.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -136,8 +137,15 @@ DATABASES = {
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': os.getenv('MEMCACHE_LOCATION', 'localhost:32768'),
+        'LOCATION': os.getenv('MEMCACHE_LOCATION', 'localhost:32768'),  # Default port: 11211
     },
+    'time_series': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': os.getenv('REDIS_LOCATION', 'localhost:32771'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
 }
 
 REST_FRAMEWORK = {

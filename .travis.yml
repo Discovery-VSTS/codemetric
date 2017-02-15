@@ -2,12 +2,11 @@ language: python
 python:
   - "3.5"
 env:
-  - MEMCACHE_LOCATION=localhost:11211
+  - MEMCACHE_LOCATION=localhost:11211 REDIS_LOCATION=localhost:6379
 services:
   - memcached
 # command to install dependencies
 install:
   - "pip install -r requirements.txt"
 script:
-  - cd code_metric
   - python manage.py test --settings=codemetric.settings
