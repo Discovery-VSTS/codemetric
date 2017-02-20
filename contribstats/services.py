@@ -15,7 +15,8 @@ class RepositoryDataService:
     def change_pass(self, token):
         self.vsts_token.set_token(token=token)
 
-    def fetch_commit(self, project_name, project_id=None, instance='vsts-discovery', from_date=None, to_date=None):
+    def fetch_commit(self, project_name, project_id=None, instance='vsts-discovery',
+                     from_date=None, to_date=None, branch='master'):
         username, token = self.vsts_token.get_credentials()
         print("going to fetch commit")
         print("project name={}".format(project_name))
@@ -23,7 +24,8 @@ class RepositoryDataService:
                                                                project_name=project_name,
                                                                project_id=project_id,
                                                                token=token, username=username,
-                                                               from_date=from_date, to_date=to_date)
+                                                               from_date=from_date, to_date=to_date,
+                                                               branch=branch)
 
         print("Retrieve data={}".format(data))
 
