@@ -195,7 +195,8 @@ class RepositoryStatsAPI:
 
     def get_vsts_commit_stats(self, instance='vsts-discovery', project_name=None, project_id=None,
                               from_date=None, to_date=None,
-                              token='dcnnkkd4daub2nvs22ixpklskij4vohedmyfelwelnw2trueci5q', username='zcabmdo'):
+                              token='dcnnkkd4daub2nvs22ixpklskij4vohedmyfelwelnw2trueci5q', username='zcabmdo',
+                              branch='master'):
         try:
             vsts_project_id = VSTSGitAPI.get_id_for_name(project_name=project_name)
 
@@ -205,7 +206,8 @@ class RepositoryStatsAPI:
             request_url = RepositoryStatsAPI.construct_commit_stats_url(project_id=vsts_project_id,
                                                                         instance=instance,
                                                                         from_date=from_date,
-                                                                        to_date=to_date)
+                                                                        to_date=to_date,
+                                                                        branch=branch)
 
             # Send request to VSTS server to get repository commit data
             r = requests.get(request_url, auth=(username, token))

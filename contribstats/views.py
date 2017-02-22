@@ -15,9 +15,14 @@ repository_data_service = RepositoryDataService()
 @api_view(['GET'])
 def get_commit_stats(request):
     repo_name = request.GET.get('repo_name')
+    branch = request.GET.get('branch')
     print("Request data for repo={}".format(repo_name))
     try:
-        commit_data = repository_data_service.fetch_commit(project_name=repo_name)
+
+        if branch is None:
+            commit_data = repository_data_service.fetch_commit(project_name=repo_name)
+        else:
+            commit_data = repository_data_service.fetch_commit(project_name=repo_name, branch=branch)
 
         return Response(commit_data,
                         content_type="application/json",
