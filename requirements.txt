@@ -1,6 +1,9 @@
 appdirs==1.4.0
+codeclimate-test-reporter==0.2.0
 CouchDB==1.1
+coverage==4.3.4
 Django==1.10.5
+django-coverage==1.2.4
 django-filter==1.0.1
 django-nose==1.4.4
 django-redis==4.7.0

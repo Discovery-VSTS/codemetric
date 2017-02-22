@@ -91,6 +91,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'contribstats_apis',
     'contribstats',
+    'codescore',
+    'django_nose',
+    'django_coverage',
 ]
 
 MIDDLEWARE = [
@@ -191,3 +194,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Use nose to run all tests
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+NOSE_ARGS = [
+    '--with-coverage',
+    '--cover-package=codemetric, codescore, contribstats, contribstats_apis, github, codeclimate',
+]
