@@ -5,7 +5,7 @@ import requests
 
 
 class GitHubAPI:
-    def __init__(self, username='minhlongdo', api_token='9f272c5a0397fca56e4f37d51b9166d6ba799d80',
+    def __init__(self, username='minhlongdo', api_token='456db8a5d83a0207111182bd01b4dbdb9ef271bf',
                  base_url='https://api.github.com'):
         self.username = username
         self.api_token = api_token
