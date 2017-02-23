@@ -5,7 +5,7 @@ import requests
 
 
 class GitHubAPI:
-    def __init__(self, username='minhlongdo', api_token='73d9aa66bf7747d12632c2fab037892f2797131c',
+    def __init__(self, api_token, username='minhlongdo',
                  base_url='https://api.github.com'):
         self.username = username
         self.api_token = api_token
@@ -21,12 +21,11 @@ class GitHubAPI:
         request_url = self.base_url + "/users/{}/repos".format(self.username)
 
         headers = {
-            'Authorization': self.api_token,
             'Accept': 'application/vnd.github.inertia-preview+json'
         }
 
         try:
-            r = requests.get(request_url, headers=headers)
+            r = requests.get(request_url, headers=headers, auth=(self.username, self.api_token))
 
             print("Received data: ", r)
 
