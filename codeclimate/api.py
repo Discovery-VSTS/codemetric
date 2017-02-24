@@ -16,14 +16,34 @@ class CodeClimateAPI:
     def set_base_url(self, base_url):
         self.base_url = base_url
 
-    def retrieve_repo_id(self, repo_name):
+    def retrieve_repo_id(self, repo_name="minhlongdo/codemetric"):
         request_url = self.base_url + "/repos"
         headers = {
             'Authorization': 'Token {}'.format(self.api_token),
             'Accept': 'application/vnd.api+json'
         }
+        params = {
+            'github_slug': repo_name
+        }
 
-    def retrieve_repo_metrics(self, repo_id):
+        try:
+            r = requests.get(request_url, headers=headers, params=params)
+
+            if r.status_code == 200:
+                for entry in r.json()['data']:
+                    if entry['attributes']['github_slug'] == repo_name:
+                        return entry['id']
+
+            return None
+
+        except Exception as e:
+            print("Something unexpected happened")
+            raise Exception(e)
+
+    def get_codebase_gpa(self, repo_id):
+        if repo_id is None or len(repo_id) == 0:
+            raise ValueError("Repository name cannot be None or empty")
+
         request_url = self.base_url + "/repos/{}".format(repo_id)
         headers = {
             'Authorization': 'Token {}'.format(self.api_token),
@@ -34,16 +54,15 @@ class CodeClimateAPI:
             r = requests.get(request_url, headers=headers)
 
             if r.status_code == 200:
-                return r.json()
+                codebase_gpa = r.json()['data']['attributes']['score']
+                print("Codebase GPA: {}".format(codebase_gpa))
+                return codebase_gpa
 
-            r.raise_for_status()
+            return None
+
         except Exception as e:
             print("Something unexpected happened")
             raise Exception(e)
-
-    def get_codebase_gpa(self, repo_id):
-        if repo_id is None or len(repo_id) == 0:
-            raise ValueError("Repository name cannot be None or empty")
 
     def get_codebase_test_coverage(self, repo_name):
         pass
