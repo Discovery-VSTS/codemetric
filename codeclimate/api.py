@@ -40,9 +40,12 @@ class CodeClimateAPI:
             print("Something unexpected happened")
             raise Exception(e)
 
-    def get_codebase_gpa(self, repo_id):
+    def __check_repo_id(self, repo_id):
         if repo_id is None or len(repo_id) == 0:
             raise ValueError("Repository name cannot be None or empty")
+
+    def get_codebase_gpa(self, repo_id):
+        self.__check_repo_id(repo_id)
 
         request_url = self.base_url + "/repos/{}".format(repo_id)
         headers = {
@@ -64,5 +67,23 @@ class CodeClimateAPI:
             print("Something unexpected happened")
             raise Exception(e)
 
-    def get_codebase_test_coverage(self, repo_name):
-        pass
+    def get_codebase_test_coverage_history(self, repo_id):
+        self.__check_repo_id(repo_id)
+
+        request_url = self.base_url + "/repos/{}/test_reports".format(repo_id)
+        headers = {
+            'Authorization': 'Token {}'.format(self.api_token),
+            'Accept': 'application/vnd.api+json'
+        }
+
+        try:
+            r = requests.get(request_url, headers=headers)
+
+            if r.status_code == 200:
+                return r.json()
+
+            return {'data': []}
+
+        except Exception as e:
+            print("Something unexpected happened")
+            raise Exception(e)
