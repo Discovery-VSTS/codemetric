@@ -35,3 +35,9 @@ class CodeMetricService:
                 return repo_id
 
         return repo_id
+
+    def get_codebase_gpa(self, repo_id):
+        if repo_id is None or len(repo_id) <= 0:
+            raise ValueError("Repo ID cannot be None or empty")
+
+        return self.codeclimate_api.get_codebase_gpa(repo_id)
