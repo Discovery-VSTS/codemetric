@@ -17,8 +17,8 @@ after_sucess:
   - CODECLIMATE_REPO_TOKEN=fa6f5e950baef17fdf7c4affc694aed03dc3ae0a886dc5ecec82de6079d710b0 codeclimate-test-reporter
 deploy:
   provider: azure_web_apps
-  on:
-    branch: master
+  verbose: true
+  on: master
   username: AZURE_WA_USERNAME
   password: AZURE_WA_PASSWORD
   site: AZURE_WA_SITE
