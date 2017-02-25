@@ -19,6 +19,6 @@ deploy:
   provider: azure_web_apps
   verbose: true
   on: master
-  username: AZURE_WA_USERNAME
-  password: AZURE_WA_PASSWORD
-  site: AZURE_WA_SITE
+  username: $AZURE_WA_USERNAME
+  password: $AZURE_WA_PASSWORD
+  site: $AZURE_WA_SITE
