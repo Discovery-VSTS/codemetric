@@ -89,3 +89,8 @@ def get_test_coverage_history(request, github_user, github_repo):
     except Exception as e:
         print("Something unexpected happened")
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+def hello_world(request):
+    return Response(data="hello", content_type="text/plain")

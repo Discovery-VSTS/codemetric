@@ -26,7 +26,9 @@ DEBUG = os.getenv('DEBUG', True)
 DEV = os.getenv('ENV', 'development') == 'development'
 
 ALLOWED_HOSTS = [
-    "0.0.0.0"
+    "localhost",
+    "127.0.0.1",
+    "138.68.147.100"
 ]
 
 # Logging configuration
