@@ -25,7 +25,9 @@ SECRET_KEY = 'udf5p(@u8zv2r=nl6dz98sb0$v0fvp+%_-e&b%)r30tk56s8(+'
 DEBUG = os.getenv('DEBUG', True)
 DEV = os.getenv('ENV', 'development') == 'development'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "0.0.0.0"
+]
 
 # Logging configuration
 LOGGING = {
