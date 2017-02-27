@@ -20,3 +20,9 @@ class UnexpectedError(APIException):
     status_code = 500
     default_detail = 'Something unexpected went wrong'
     default_code = 'internal_error'
+
+
+class VSTSInstanceError(APIException):
+    status_code = 400
+    default_detail = 'Need instance value'
+    default_code = 'bad_request'
