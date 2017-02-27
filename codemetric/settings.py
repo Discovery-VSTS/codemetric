@@ -25,6 +25,9 @@ SECRET_KEY = 'udf5p(@u8zv2r=nl6dz98sb0$v0fvp+%_-e&b%)r30tk56s8(+'
 DEBUG = os.getenv('DEBUG', True)
 DEV = os.getenv('ENV', 'development') == 'development'
 
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 ALLOWED_HOSTS = [
     "localhost",
     "127.0.0.1",
