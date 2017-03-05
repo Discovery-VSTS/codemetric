@@ -12,6 +12,9 @@ import json
 
 @api_view(['GET'])
 def get_codebase_gpa(request, github_user, github_repo):
+    """
+    Gets the codebase's current GPA from Codeclimate.
+    """
     github_api_token = request.META['HTTP_AUTHORIZATION']
 
     if github_api_token is None or len(github_api_token) <= 0:
@@ -53,6 +56,9 @@ def get_codebase_gpa(request, github_user, github_repo):
 
 @api_view(['GET'])
 def get_test_coverage_history(request, github_user, github_repo):
+    """
+    Returns test coverage history collected by Codeclimate.
+    """
     github_api_token = request.META['HTTP_AUTHORIZATION']
 
     if github_api_token is None or len(github_api_token) <= 0:
@@ -93,4 +99,7 @@ def get_test_coverage_history(request, github_user, github_repo):
 
 @api_view(['GET'])
 def hello_world(request):
+    """
+    Returns hello world - this is only to test if the application is serving any incoming traffic.
+    """
     return Response(data="hello", content_type="text/plain")

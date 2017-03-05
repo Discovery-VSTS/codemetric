@@ -101,6 +101,7 @@ INSTALLED_APPS = [
     'codescore',
     'django_nose',
     'django_coverage',
+    'rest_framework_swagger',
     'sslserver',
 ]
 

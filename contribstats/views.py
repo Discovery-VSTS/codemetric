@@ -13,8 +13,11 @@ repository_data_service = RepositoryDataService()
 
 
 @api_view(['GET'])
-def get_commit_stats(request):
-    repo_name = request.GET.get('repo_name')
+def get_commit_stats(request, instance_name, repo_name):
+    """
+    Get commit statistics from VSTS git repository. Default branch is going to be 'master'.
+    """
+
     branch = request.GET.get('branch')
     account = request.GET.get('account')
 
@@ -26,9 +29,9 @@ def get_commit_stats(request):
     try:
 
         if branch is None:
-            commit_data = repository_data_service.fetch_commit(project_name=repo_name, instance=account)
+            commit_data = repository_data_service.fetch_commit(project_name=repo_name, instance=instance_name)
         else:
-            commit_data = repository_data_service.fetch_commit(project_name=repo_name, branch=branch, instance=account)
+            commit_data = repository_data_service.fetch_commit(project_name=repo_name, branch=branch, instance=instance_name)
 
         return Response(commit_data,
                         content_type="application/json",
