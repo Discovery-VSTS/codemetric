@@ -11,14 +11,22 @@ import json
 
 
 @api_view(['GET'])
-def get_codebase_gpa(request, github_user, github_repo):
+def get_codebase_gpa(request):
     """
     Gets the codebase's current GPA from Codeclimate.
     """
     github_api_token = request.META['HTTP_AUTHORIZATION']
+    github_user = request.GET.get('github_user')
+    github_repo = request.GET.get('github_repo')
 
     if github_api_token is None or len(github_api_token) <= 0:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+    if github_user is None or len(github_user.strip()) <= 0:
+        return Response(status=status.HTTP_400_BAD_REQUEST, data="Need to specify github_user")
+
+    if github_repo is None or len(github_repo.strip()) <= 0:
+        return Response(status=status.HTTP_400_BAD_REQUEST, data="Need to specify github_repo")
 
     try:
         codemetric_service = CodeMetricService(github_token=github_api_token)
@@ -55,11 +63,13 @@ def get_codebase_gpa(request, github_user, github_repo):
 
 
 @api_view(['GET'])
-def get_test_coverage_history(request, github_user, github_repo):
+def get_test_coverage_history(request):
     """
     Returns test coverage history collected by Codeclimate.
     """
     github_api_token = request.META['HTTP_AUTHORIZATION']
+    github_user = request.GET.get('github_user')
+    github_repo = request.GET.get('github_repo')
 
     if github_api_token is None or len(github_api_token) <= 0:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
@@ -67,7 +77,7 @@ def get_test_coverage_history(request, github_user, github_repo):
     try:
         codemetric_service = CodeMetricService(github_token=github_api_token)
 
-        repo_id = codemetric_service.retrieve_repo_id_using_repo_name(repo_name=github_user + "/" + github_repo)
+        repo_id = codemetric_service.retrieve_repo_id_using_repo_name(repo_name="{}/{}".format(github_user, github_repo))
 
         data = {
             'user': github_user,

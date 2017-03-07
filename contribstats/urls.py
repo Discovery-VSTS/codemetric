@@ -6,5 +6,5 @@ from .views import get_commit_stats
 
 
 urlpatterns = [
-    url('commit-stats/(?P<instance_name>\w{0,50})/(?P<repo_name>\w{0,50})/$', view=get_commit_stats, name='commit-stats')
+    url('commit-stats/$', view=get_commit_stats, name='commit-stats')
 ]
