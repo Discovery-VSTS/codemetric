@@ -94,7 +94,7 @@ def get_test_coverage_history(request):
                             content_type="application/json")
 
         data['coverage-history'] = test_coverage_history
-        return Response(data=json.dumps(data),
+        return Response(data=data,
                         status=status.HTTP_200_OK,
                         content_type="application/json")
 
