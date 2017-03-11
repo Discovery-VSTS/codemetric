@@ -16,9 +16,6 @@ install:
 - pip install -r requirements.txt
 script:
 - python manage.py test --settings=codemetric.settings
-addons:
-  code_climate:
-    repo_token: fa6f5e950baef17fdf7c4affc694aed03dc3ae0a886dc5ecec82de6079d710b0
 after_sucess:
 - CODECLIMATE_REPO_TOKEN=fa6f5e950baef17fdf7c4affc694aed03dc3ae0a886dc5ecec82de6079d710b0
   codeclimate-test-reporter
