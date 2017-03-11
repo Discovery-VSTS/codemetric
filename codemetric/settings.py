@@ -30,6 +30,7 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = [
+    'http://discovery-codemetrics.azurewebsites.net/',
     '.visualstudio.com',
     '127.0.0.1'
 ]
@@ -115,6 +116,7 @@ else:
             'LOCATION': os.getenv('REDIS_LOCATION'),
             'OPTIONS': {
                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                'PASSWORD': os.getenv('REDIS_PASSWORD')
             }
         }
     }
