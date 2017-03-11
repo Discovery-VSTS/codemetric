@@ -1,24 +1,29 @@
+sudo: required
 language: python
 python:
-  - "3.5"
+- '3.5'
 env:
-  - MEMCACHE_LOCATION=localhost:11211 REDIS_LOCATION=localhost:6379
+  matrix:
+  - REDIS_LOCATION=localhost:6379
+  global:
+  - secure: nhhYq/148M+RzHqMZqcWPdp+Fw+8h9R1gsOxG36wZ+m0+dhgTHnRw2CF0qqzME1VquUVKOyR4gO5zOEZsvcJhobCU+m99Ub2IAb/4S4be0I3mhLPEOcnRL3TF5QkH8kHi+0PboZCA3eYjBqlN1q51XfcY7LsZRyQdgraez9VImqEEhhcZXtdWqCvNePR3xmS7P9Aoc+3YZ+m+aXurD3Yoc8Z9kqzRmdxn2NDDUnq0PuH4Cy4dbTdxbQHV/zC1/xk7VymRYgnRUZibKIBWZNu7SpDZFbY/6f5zPQJ7enPrfKP17FJ/vI6MWveKvVVnlFm9t+xWfjkRIDeABq8Yz0a3i2hm49inioUz7crBWTuD8CkIuZfkdb/TcYvf3/er6CX1HxkxG8dhfZThT/kH7mpCIhDTJoHNwrPMM4eumCSUr9Rmmwp3NGLfue3WROMBx0wnz02AbaOS8BDFFw5yZwCa9t+j+jTA6DARi9bLf4OEdBKGqMhe+7Bo14qaDGaJLa9At6honWxIwL9pj23KBCvgxkk8ai4CvceSEoWAuM8dpOX5eTvvYGjp3lPYrv6lTgMMgl0yNbmvQ9uiLge2zTSMOyI7amjno/P2cn4kjt0oL5Gn+ArSCq79G+peaEnrkbl68BxXCLU/favtrkqKfB+Qc4Rlk17Vy/dhdfvyvwU3ZQ=
+  - secure: Kmf0XkmIcj70FfERJe03TA5nCoYidmvcpEOKPv334maLj1ONG64kzG9fdAaZn7JiMh/L/4V1ss+JZZHHyyRU/4My+KgPrf/v0ZJDxQSOvLiZn8+gGzDbPbCarYoNYPYyhziZ+yW+VaGU4+EVo7I2O5c+qOHYtPro4Yd9d1Vetk3WzPVOkNWzzH0xDcqdMJMEOzXrO/xBrG74EAjL3Xg5an7g0+Nccf6xujOcFf4AozyTbGsCo9+jTENE4Q0OPbC63VJoiKWVEaw+4hl1MrA9WRKEjyg9R8Kgr2aUF/hEzmBW2DxSUvZS6SRfCqJt3x7scfX/KWFZ23TN3G/MTFiouyuAeAP6KTaBXBfbbFE1BeDC9KuEmbTcJ7Xl9oXZ9zQPta+eozYo3GV4s7wynuH+YUZBG83zzx35LOhTG4yLx9SfUQM5PmS3gikNzH4tPZZvKKmiUF5lnKQn6m5hysjeJVFeR+w4qSFLPDSbigT2SrQILw18IOFJ9DlyyCEnN9ml64uEftDcYxmTbT6/0Za9hqX6Vz/EyCF8144QVChNnKjgfw9Z07qO+pO7c8NChOjytRxvlJ8bbYySA8gwzYlKlePt7G/189erztITzO9pqV6WxzAzi76gQO8xAbV3tbfl+ZWl/UuqEvndZMPyfOIBsrsHiCy2zGJR26qf5qeONSk=
+  - secure: Ll1lEf/PGA+nZuLbrQNp6iwInQUKLEBn7QEc4x6XEKyM+YoAcrSy2bhHC48kb5IzCoyLd22GXTKc/o68HqEmGYSJVcrC8Knww3htJiGVvI2ucthejTIBUviqiZyNLKntmqej5Ec7medVTlRQhjvmWFYxUr4I3ANYhcKKAPIgchtgHS1V74vvYZMQorhRDhIhZFgN1gfjnx9ynGnvpyQoTb0PPABv4k12PT9P0bgLwMEJ+oQKh41rf44dZLwhJdctse38/Ocs1cbzYZ/7YKMB8sezOwJ9v5JEoSILjzuvn5vu3IJEk4HS6ue5yk1MxVN08Ptj4BjxXTjxnRrPTRkv3Z8tFJFdbuoGeR9bB28yevBa5/da3oz0P8VX7lkJY/lklSAvp5Xgfb556InkfDDYDdD10eMjW82Hz7PQlGbS6zVUYQ8Ab1644hSErs99tMrP47mIOMaPtYUMwcuLHS3pCH5atG8XGqwjNaDo2H9w0ZsAAruH/50eSFUvBkqn9mWxinjeA5CuS6ERX+8SpzPef7vHFKHGFg2w6cEnqvAPLBvdALboo2VbjREExscbREfNWlTpSoRs9BhvegrzEZaN1XOHkzkoyqRtyAgh4ZYDhEKXk/Mh7FbNk/I67gvygNP5s2MD9m0T1N2PCBxWxpGXyrh3iCPmjbH1bipVmCRiHvk=
 services:
-  - memcached
-# command to install dependencies
+- redis
+- docker
 install:
-  - "pip install -r requirements.txt"
+- pip install -r requirements.txt
 script:
-  - python manage.py test --settings=codemetric.settings
+- python manage.py test --settings=codemetric.settings
 addons:
-    code_climate:
-        repo_token: fa6f5e950baef17fdf7c4affc694aed03dc3ae0a886dc5ecec82de6079d710b0
+  code_climate:
+    repo_token: fa6f5e950baef17fdf7c4affc694aed03dc3ae0a886dc5ecec82de6079d710b0
 after_sucess:
-  - CODECLIMATE_REPO_TOKEN=fa6f5e950baef17fdf7c4affc694aed03dc3ae0a886dc5ecec82de6079d710b0 codeclimate-test-reporter
-deploy:
-  provider: azure_web_apps
-  verbose: true
-  on: master
-  username: $AZURE_WA_USERNAME
-  password: $AZURE_WA_PASSWORD
-  site: $AZURE_WA_SITE
+- CODECLIMATE_REPO_TOKEN=fa6f5e950baef17fdf7c4affc694aed03dc3ae0a886dc5ecec82de6079d710b0
+  codeclimate-test-reporter
+- python manage.py makemigrations
+- python manage.py migrate
+- test $TRAVIS_BRANCH == "master" && docker login -u=$DOCKER_USERNAME -p=$DOCKER_PASSWORD
+  $DOCKER_URL & docker build -t $DOCKER_URL/codemetrics:$APP_MAJOR_VERSION.$APP_MINOR_VERSION.$TRAVIS_BUILD_NUMBER
+  . && docker push $DOCKER_URL/codemetrics:$APP_MAJOR_VERSION.$APP_MINOR_VERSION.$TRAVIS_BUILD_NUMBER

@@ -9,9 +9,7 @@ django-coverage==1.2.4
 django-filter==1.0.1
 django-nose==1.4.4
 django-redis==4.7.0
-django-sslserver==0.19
 django-rest-swagger==2.1.1
-django-sslserver==0.19
 djangorestframework==3.5.3
 fakeredis==0.8.2
 funcsigs==1.0.2
