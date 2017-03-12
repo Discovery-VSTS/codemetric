@@ -30,8 +30,6 @@ def get_commit_stats(request):
     if repo_name is None or len(repo_name.strip()) <= 0:
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-    print("Request data for repo={}".format(repo_name))
-
     try:
 
         if branch is None:

@@ -106,7 +106,6 @@ def get_test_coverage_history(request):
                         content_type="application/json")
 
     except ValueError as e:
-        print("Empty repo ID or None Value: ", e)
         logging.warn(e)
         raise RepoIDNotFound
 
