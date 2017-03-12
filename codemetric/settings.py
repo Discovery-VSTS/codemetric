@@ -30,7 +30,7 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
 ALLOWED_HOSTS = [
-    'http://discovery-codemetrics.azurewebsites.net/',
+    'discovery-codemetrics.azurewebsites.net',
     '.visualstudio.com',
     '127.0.0.1'
 ]
