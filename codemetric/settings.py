@@ -23,7 +23,7 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'udf5p(@u8zv2r=nl6dz98sb0$v0fvp+%_-e&b%)r30
 
 # SECURITY WARNING: don't run with debug turned on in production!
 PROD = eval(os.getenv('PROD', True))
-DEBUG = eval(os.getenv('DEBUG', True))
+DEBUG = eval(os.getenv('DEBUG', False))
 DEV = os.getenv('ENV', 'development') == 'development'
 
 SESSION_COOKIE_SECURE = True
