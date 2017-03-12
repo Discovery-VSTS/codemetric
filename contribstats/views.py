@@ -9,6 +9,8 @@ from contribstats_apis.exceptions import VSTSProjectException
 from .services import RepositoryDataService
 from .exceptions import InvalidRequest, RepositoryNotFound, UnexpectedError, VSTSInstanceError
 
+import logging
+
 repository_data_service = RepositoryDataService()
 
 
@@ -17,6 +19,7 @@ def get_commit_stats(request):
     """
     Get commit statistics from VSTS git repository. Default branch is going to be 'master'.
     """
+    logging.info('Get commit stats')
     instance_name = request.GET.get('instance_name')
     repo_name = request.GET.get('repo_name')
     branch = request.GET.get('branch')
@@ -41,7 +44,8 @@ def get_commit_stats(request):
                         content_type="application/json",
                         status=status.HTTP_200_OK)
 
-    except ValueError:
+    except ValueError as e:
+        logging.warn(e)
         raise InvalidRequest
 
     except VSTSInstanceError:
@@ -50,5 +54,6 @@ def get_commit_stats(request):
     except VSTSProjectException:
         raise RepositoryNotFound
 
-    except Exception:
+    except Exception as e:
+        logging.error(e)
         raise UnexpectedError

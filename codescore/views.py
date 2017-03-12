@@ -8,6 +8,7 @@ from .services import CodeMetricService
 from .exceptions import RepoIDNotFound
 
 import json
+import logging
 
 
 @api_view(['GET'])
@@ -15,17 +16,21 @@ def get_codebase_gpa(request):
     """
     Gets the codebase's current GPA from Codeclimate.
     """
+    logging.info('Get codebase GPA')
     github_api_token = request.META['HTTP_AUTHORIZATION']
     github_user = request.GET.get('github_user')
     github_repo = request.GET.get('github_repo')
 
     if github_api_token is None or len(github_api_token) <= 0:
+        logging.warn('Missing Github token')
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     if github_user is None or len(github_user.strip()) <= 0:
+        logging.warn('Missing Github username')
         return Response(status=status.HTTP_400_BAD_REQUEST, data="Need to specify github_user")
 
     if github_repo is None or len(github_repo.strip()) <= 0:
+        logging.warn('Missing github_repo')
         return Response(status=status.HTTP_400_BAD_REQUEST, data="Need to specify github_repo")
 
     try:
@@ -54,11 +59,11 @@ def get_codebase_gpa(request):
                         status=status.HTTP_200_OK)
 
     except ValueError as e:
-        print("Empty repo ID or None Value: ", e)
+        logging.warn(e)
         raise RepoIDNotFound
 
     except Exception as e:
-        print("Something went wrong - ", e)
+        logging.error(e)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -67,11 +72,13 @@ def get_test_coverage_history(request):
     """
     Returns test coverage history collected by Codeclimate.
     """
+    logging.info('Attempting to retrieve coverage history...')
     github_api_token = request.META['HTTP_AUTHORIZATION']
     github_user = request.GET.get('github_user')
     github_repo = request.GET.get('github_repo')
 
     if github_api_token is None or len(github_api_token) <= 0:
+        logging.warn('Missing Github token')
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
     try:
@@ -100,10 +107,12 @@ def get_test_coverage_history(request):
 
     except ValueError as e:
         print("Empty repo ID or None Value: ", e)
+        logging.warn(e)
         raise RepoIDNotFound
 
     except Exception as e:
         print("Something unexpected happened")
+        logging.error(e)
         return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
