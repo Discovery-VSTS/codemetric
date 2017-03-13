@@ -4,10 +4,11 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.status import HTTP_500_INTERNAL_SERVER_ERROR
 
 from contribstats_apis.exceptions import VSTSProjectException
 from .services import RepositoryDataService
-from .exceptions import InvalidRequest, RepositoryNotFound, UnexpectedError, VSTSInstanceError
+from .exceptions import InvalidRequest, RepositoryNotFound, VSTSInstanceError
 
 import logging
 
@@ -54,4 +55,4 @@ def get_commit_stats(request):
 
     except Exception as e:
         logging.error(e)
-        raise UnexpectedError
+        return Response(data=e, status=HTTP_500_INTERNAL_SERVER_ERROR)
