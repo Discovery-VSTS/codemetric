@@ -35,6 +35,8 @@ ALLOWED_HOSTS = [
     '127.0.0.1'
 ]
 
+SETTING_MANAGE_URL = os.getenv('SETTING_MANAGE_URL', 'https://discovery-settingmanagement.azurewebsites.net/')
+
 # Application definition
 
 INSTALLED_APPS = [
