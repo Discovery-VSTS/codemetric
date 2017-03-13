@@ -39,7 +39,7 @@ def get_commit_stats(request):
             commit_data = repository_data_service.fetch_commit(project_name=repo_name, branch=branch,
                                                                instance=instance_name)
 
-        return Response(commit_data,
+        return Response(data=commit_data,
                         content_type="application/json",
                         status=status.HTTP_200_OK)
 
