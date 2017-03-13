@@ -118,7 +118,6 @@ else:
             'LOCATION': os.getenv('REDIS_LOCATION'),
             'OPTIONS': {
                 'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-                'PASSWORD': os.getenv('REDIS_PASSWORD')
             }
         }
     }
