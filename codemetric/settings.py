@@ -98,10 +98,7 @@ if not PROD:
     CACHES = {
         'default': {
             'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': os.getenv('REDIS_LOCATION', 'localhost:32771'),
-            'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-            }
+            'LOCATION': os.getenv('REDIS_LOCATION', 'localhost:32771')
         }
     }
 else:
@@ -117,7 +114,8 @@ else:
             'BACKEND': 'django_redis.cache.RedisCache',
             'LOCATION': os.getenv('REDIS_LOCATION'),
             'OPTIONS': {
-                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "PASSWORD": os.getenv('REDIS_PASSWORD')
             }
         }
     }

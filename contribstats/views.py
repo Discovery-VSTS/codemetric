@@ -26,16 +26,20 @@ def get_commit_stats(request):
     branch = request.GET.get('branch')
 
     if instance_name is None or len(instance_name.strip()) <= 0:
+        logging.warn("Instance name is None or empty")
         raise VSTSInstanceError
 
     if repo_name is None or len(repo_name.strip()) <= 0:
+        logging.warn("Repository name is None or empty")
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
     try:
 
         if branch is None:
+            logging.info("Branch is none")
             commit_data = repository_data_service.fetch_commit(project_name=repo_name, instance=instance_name)
         else:
+            logging.info('Branch={}'.format(branch))
             commit_data = repository_data_service.fetch_commit(project_name=repo_name, branch=branch,
                                                                instance=instance_name)
 
