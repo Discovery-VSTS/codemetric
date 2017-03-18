@@ -13,8 +13,31 @@ from .services import RepositoryDataService
 from .exceptions import InvalidRequest, RepositoryNotFound, VSTSInstanceError
 
 import logging
+import requests
 
 repository_data_service = RepositoryDataService()
+
+
+@api_view(['GET'])
+def get_all_repos(request):
+    """
+    Get all repositories from team
+    """
+    instance_id = request.GET.get('instance_id', '')
+    instance_name = request.GET.get('instance_name', '')
+
+    if instance_id is None or instance_id == '':
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    # Get all repos
+    params = {'api-version': '1.0'}
+    r = requests.get("https://{}.visualstudio.com/DefaultCollection/_apis/projects".format(instance_name),
+                     params=params, auth=("zcabmdo", "dcnnkkd4daub2nvs22ixpklskij4vohedmyfelwelnw2trueci5q"))
+
+    repos = dict()
+    repos['repos'] = r.json()['value']
+
+    return JsonResponse(repos)
 
 
 @api_view(['GET'])
