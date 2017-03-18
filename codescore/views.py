@@ -21,16 +21,11 @@ def get_codebase_gpa(request):
     logging.info('Get codebase GPA')
     instance_id = request.GET.get('instance_id')
     user_email = request.GET.get('user_email')
-    github_user = request.GET.get('github_user')
     github_repo = request.GET.get('github_repo')
 
     if instance_id is None or len(instance_id) <= 0:
         logging.warn('Missing instance ID')
         return Response(status=status.HTTP_401_UNAUTHORIZED)
-
-    if github_user is None or len(github_user.strip()) <= 0:
-        logging.warn('Missing Github username')
-        return Response(status=status.HTTP_400_BAD_REQUEST, data="Need to specify github_user")
 
     if github_repo is None or len(github_repo.strip()) <= 0:
         logging.warn('Missing github_repo')
@@ -44,10 +39,23 @@ def get_codebase_gpa(request):
         github_api_token = r.json()['github_token']
         codemetric_service = CodeMetricService(github_token=github_api_token)
 
-        repo_id = codemetric_service.retrieve_repo_id_using_repo_name(github_user + "/" + github_repo)
+        data = r.json()
+
+        github_api_token = data['github_token']
+        github_org = data['github_org']
+        codeclimate_token = data['codeclimate_token']
+
+        if github_api_token == '':
+            return Response(data="Please set GitHub API token", status=status.HTTP_400_BAD_REQUEST)
+
+        if codeclimate_token == '':
+            return Response(data="Please set Codeclimate API token", status=status.HTTP_400_BAD_REQUEST)
+
+        codemetric_service = CodeMetricService(github_token=github_api_token, codeclimate_token=codeclimate_token)
+        repo_id = codemetric_service.retrieve_repo_id_using_repo_name(github_org + "/" + github_repo)
 
         data = {
-            'user': github_user,
+            'org': github_org,
             'repo_name': github_repo,
             'repo_id': repo_id,
         }

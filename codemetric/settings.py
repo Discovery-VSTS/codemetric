@@ -22,8 +22,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY', 'udf5p(@u8zv2r=nl6dz98sb0$v0fvp+%_-e&b%)r30tk56s8(+')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-PROD = eval(os.getenv('PROD', 'True'))
-DEBUG = eval(os.getenv('DEBUG', 'False'))
+PROD = eval(os.getenv('PROD', 'False'))
+DEBUG = eval(os.getenv('DEBUG', 'True'))
 DEV = os.getenv('ENV', 'development') == 'development'
 
 SESSION_COOKIE_SECURE = True
@@ -100,7 +100,10 @@ if not PROD:
     CACHES = {
         'default': {
             'BACKEND': 'django_redis.cache.RedisCache',
-            'LOCATION': os.getenv('REDIS_LOCATION', 'localhost:32771')
+            'LOCATION': os.getenv('REDIS_LOCATION', 'redis://localhost:32771'),
+            'OPTIONS': {
+                'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            }
         }
     }
 else:
