@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from django.http import JsonResponse
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -8,7 +10,6 @@ from .services import CodeMetricService
 from .exceptions import RepoIDNotFound
 from codemetric.settings import SETTING_MANAGE_URL
 
-import json
 import logging
 import requests
 
@@ -36,9 +37,6 @@ def get_codebase_gpa(request):
         params = {'instance_id': instance_id, 'user_email': user_email}
         r = requests.get(SETTING_MANAGE_URL + "v1/tokenstorage/", params=params)
 
-        github_api_token = r.json()['github_token']
-        codemetric_service = CodeMetricService(github_token=github_api_token)
-
         data = r.json()
 
         github_api_token = data['github_token']
@@ -62,17 +60,13 @@ def get_codebase_gpa(request):
 
         if repo_id is None or len(repo_id) <= 0:
             data['gpa'] = '-1'
-            return Response(data=json.dumps(data),
-                            status=status.HTTP_404_NOT_FOUND,
-                            content_type="application/json")
+            return JsonResponse(data)
 
         codebase_gpa = codemetric_service.get_codebase_gpa(repo_id)
 
         data['gpa'] = codebase_gpa
 
-        return Response(data=json.dumps(data),
-                        content_type="application/json",
-                        status=status.HTTP_200_OK)
+        return JsonResponse(data)
 
     except ValueError as e:
         logging.warn(e)
@@ -119,14 +113,10 @@ def get_test_coverage_history(request):
 
         if test_coverage_history is None or len(test_coverage_history) <= 0:
             data['coverage-history'] = []
-            return Response(data=json.dumps(data),
-                            status=status.HTTP_200_OK,
-                            content_type="application/json")
+            return JsonResponse(data)
 
         data['coverage-history'] = test_coverage_history
-        return Response(data=data,
-                        status=status.HTTP_200_OK,
-                        content_type="application/json")
+        return JsonResponse(data)
 
     except ValueError as e:
         logging.warn(e)
