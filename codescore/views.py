@@ -85,7 +85,6 @@ def get_test_coverage_history(request):
     logging.info('Attempting to retrieve coverage history...')
     instance_id = request.GET.get('instance_id')
     user_email = request.GET.get('user_email')
-    github_user = request.GET.get('github_user')
     github_repo = request.GET.get('github_repo')
 
     if instance_id is None or len(instance_id) <= 0:
@@ -97,14 +96,19 @@ def get_test_coverage_history(request):
         params = {'instance_id': instance_id, 'user_email': user_email}
         r = requests.get(SETTING_MANAGE_URL + "v1/tokenstorage/", params=params)
 
-        github_api_token = r.json()['github_token']
-        codemetric_service = CodeMetricService(github_token=github_api_token)
+        data = r.json()
 
-        repo_id = codemetric_service.retrieve_repo_id_using_repo_name(repo_name="{}/{}".format(github_user,
+        github_api_token = data['github_token']
+        github_org = data['github_org']
+        codeclimate_token = data['codeclimate_token']
+
+        codemetric_service = CodeMetricService(github_token=github_api_token, codeclimate_token=codeclimate_token)
+
+        repo_id = codemetric_service.retrieve_repo_id_using_repo_name(repo_name="{}/{}".format(github_org,
                                                                                                github_repo))
 
         data = {
-            'user': github_user,
+            'org': github_org,
             'repo_name': github_repo,
             'repo_id': repo_id,
         }
