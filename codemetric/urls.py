@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^repo-stats/', include('contribstats.urls')),
-    url(r'^code-score/', include('codescore.urls'))
+    url(r'^code-score/', include('codescore.urls')),
+    url(r'^docs/', include('rest_framework_docs.urls'))
 ]

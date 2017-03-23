@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django_nose',
     'django_coverage',
     'corsheaders',
+    'rest_framework_docs',
 ]
 
 MIDDLEWARE = [
@@ -168,6 +169,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'staticfiles'
 
 # Use nose to run all tests
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
